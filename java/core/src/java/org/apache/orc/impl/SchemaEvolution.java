@@ -322,9 +322,9 @@ public class SchemaEvolution {
       return null;
     }
 
-    boolean[] result = new boolean[readerSchema.getMaximumId() + 1];
+    boolean[] result = new boolean[fileSchema.getMaximumId() + 1];
     boolean safePpd = validatePPDConversion(fileSchema, readerSchema);
-    result[readerSchema.getId()] = safePpd;
+    result[fileSchema.getId()] = safePpd;
     return populatePpdSafeConversionForChildern(result,
         readerSchema.getChildren());
   }
@@ -344,8 +344,11 @@ public class SchemaEvolution {
     if (children != null) {
       for (TypeDescription child : children) {
         TypeDescription fileType = getFileType(child.getId());
+        if(fileType == null) {
+          continue;
+        }
         safePpd = validatePPDConversion(fileType, child);
-        ppdSafeConversion[child.getId()] = safePpd;
+        ppdSafeConversion[fileType.getId()] = safePpd;
         populatePpdSafeConversionForChildern(ppdSafeConversion,
             child.getChildren());
       }

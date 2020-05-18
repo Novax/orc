@@ -92,14 +92,14 @@ public class TestRecordReaderImpl {
   @Test
   public void testFindColumn() throws Exception {
     Configuration conf = new Configuration();
-    TypeDescription file = TypeDescription.fromString("struct<a:int,c:string,e:int>");
-    TypeDescription reader = TypeDescription.fromString("struct<a:int,b:double,c:string,d:double,e:bigint>");
+    TypeDescription reader = TypeDescription.fromString("struct<a:int,c:string,e:int>");
+    TypeDescription file = TypeDescription.fromString("struct<a:int,b:double,c:string,d:double,e:bigint>");
     SchemaEvolution evo = new SchemaEvolution(file, reader, new Reader.Options(conf));
     assertEquals(1, RecordReaderImpl.findColumns(evo, "a"));
     assertEquals(-1, RecordReaderImpl.findColumns(evo, "b"));
-    assertEquals(2, RecordReaderImpl.findColumns(evo, "c"));
+    assertEquals(3, RecordReaderImpl.findColumns(evo, "c"));
     assertEquals(-1, RecordReaderImpl.findColumns(evo, "d"));
-    assertEquals(3, RecordReaderImpl.findColumns(evo, "e"));
+    assertEquals(5, RecordReaderImpl.findColumns(evo, "e"));
   }
 
   @Test
